@@ -35,10 +35,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const gardenScene = document.querySelector('[data-role="garden"]');
   let noConfirmShown = false;
 
-  if (window.emailjs) {
-    emailjs.init("YOUR_PUBLIC_KEY");
-  }
-
   const tryPlayAudio = () => {};
 
   const releaseNotLoadedState = () => {
@@ -153,27 +149,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 6000);
   };
 
-  const sendSuccessEmail = () => {
-    if (!window.emailjs) return Promise.resolve();
-
-    const templateParams = {
-      responder: "Kevin Roy Maglaqui",
-      response: "She said yes!",
-      time: new Date().toLocaleString(),
-    };
-
-    return emailjs
-      .send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", templateParams)
-      .catch(() => {
-        console.warn("EmailJS send failed. Ensure IDs are set correctly.");
-      });
-  };
-
   if (yesButton) {
     yesButton.addEventListener("click", () => {
       launchPetals();
       setConfirmMessage("Yay! I can't wait for our story to begin.");
-      sendSuccessEmail();
     });
   }
 
