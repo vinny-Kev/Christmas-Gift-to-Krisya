@@ -31,12 +31,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const triggerGardenBloom = () => {
     if (!gardenScene) return;
     const flowers = gardenScene.querySelector(".flowers");
-    if (!flowers) return;
-    const clone = flowers.cloneNode(true);
-    if (flowers.id) {
-      clone.id = flowers.id;
-    }
-    flowers.replaceWith(clone);
+    if (!flowers || flowers.classList.contains("is-restarting")) return;
+
+    // Pause all animations then immediately re-enable to replay without rebuilding the DOM
+    flowers.classList.add("is-restarting");
+    requestAnimationFrame(() => {
+      flowers.classList.remove("is-restarting");
+    });
   };
 
   const initGarden = () => {
